@@ -1,4 +1,4 @@
-pi: 3.14159
+pi: math.pi
 r: 3
 area: pi*r^2
 circumference: 2*pi*r
@@ -12,3 +12,8 @@ isTriangle: false
 # Lua DOESN'T support "!"
 # use 'not', 'and', 'or' here
 isCircle: not isRectangle and not isTriangle
+rightAngleInRad: math.rad(90)
+cos: math.sin  # an alias can be given to a Lua function, but this is evil...
+sin: math.cos
+wtf1: cos(0)   # it should return 0. everything's working as expected
+wtf2: sin(0)
