@@ -3,7 +3,7 @@ r: 3
 area: pi*r^2
 circumference: 2*pi*r
 d: math.sqrt(area/pi)*2  # sqrt is in math!
-# string is supposed, but using it sounds like a bad idea...
+# string is supported, but using it sounds like a bad idea...
 # don't forget to quote the name though. Also use ">-" to escape quotes
 name: >-
     "A simple circle"
