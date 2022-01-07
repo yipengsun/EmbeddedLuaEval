@@ -1,15 +1,16 @@
 // Author: Yipeng Sun
 // License: BSD 2-clause
-// Last Change: Fri Jan 07, 2022 at 05:49 PM +0100
+// Last Change: Fri Jan 07, 2022 at 06:30 PM +0100
+
+#include <iostream>
 
 #include <cxxopts.hpp>
-#include <iostream>
 #include <lua.hpp>
 
 using namespace std;
 
 int main(int argc, char** argv) {
-  cxxopts::Options argOpts("demo", "demo: embedding Lua in C++.");
+  cxxopts::Options argOpts("demo", "a demo on embedding Lua in C++.");
 
   // clang-format off
   argOpts.add_options()
@@ -28,8 +29,29 @@ int main(int argc, char** argv) {
   auto luaState = luaL_newstate();
   luaL_openlibs(luaState);
 
-  lua_pushstring(luaState, "123.4");
+  lua_getglobal(luaState, "loadstring");
+  lua_pushstring(luaState, "return 123.4+7.9");
+  lua_call(luaState, 1, 1);
+  lua_call(luaState, 0, 1);
   lua_setglobal(luaState, "a");
 
+  auto a = lua_tonumber(luaState, 0);  // latest value on top of the stack
+
+  lua_settop(luaState, 0);  // avoid stack overflow
+  lua_getglobal(luaState, "loadstring");
+  lua_pushstring(luaState, "return a*2");
+  lua_call(luaState, 1, 1);
+  lua_call(luaState, 0, 1);
+  lua_setglobal(luaState, "b");
+
+  auto b = lua_tonumber(luaState, 0);
+
+  lua_settop(luaState, 0);  // avoid stack overflow
+  lua_getglobal(luaState, "a");
+  auto a2 = lua_tonumber(luaState, 1);
+
+  cout << a << " " << b << " " << a2 << endl;
+
+  lua_close(luaState);
   return 0;
 }
