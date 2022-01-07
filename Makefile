@@ -1,5 +1,5 @@
 # Author: Yipeng Sun
-# Last Change: Fri Jan 07, 2022 at 10:48 PM +0100
+# Last Change: Fri Jan 07, 2022 at 10:51 PM +0100
 
 VPATH := include:src:bin
 HEADERS := $(shell find ./include -name "*.h")
@@ -17,7 +17,7 @@ clean:
 	@rm -rf ./bin/*
 
 run-demo: demo params/simple.yml
-	bin/demo -g "pi" -i ./params/simple.yml
+	bin/demo -g "area" -i ./params/simple.yml
 	bin/demo -g "r" -i ./params/simple.yml -t int
 	bin/demo -g "name" -i ./params/simple.yml -t string
 	bin/demo -g "isCircle" -i ./params/simple.yml -t bool
