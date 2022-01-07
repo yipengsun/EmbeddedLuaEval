@@ -116,8 +116,8 @@ void ParamEval::set(string const name, string const expr) {
     mKnownVars.emplace_back(name);
   }
 
-  lua_settop(mLuaInst, 0);                // to avoid stack overflow
-  lua_getglobal(mLuaInst, "loadstring");  // the magic 'eval' in Lua
+  lua_settop(mLuaInst, 0);          // to avoid stack overflow
+  lua_getglobal(mLuaInst, "load");  // the magic 'eval' in Lua
   lua_pushstring(mLuaInst, ("return " + expr).c_str());
   lua_call(mLuaInst, 1, 1);  // call "loadstring(expr) -> lambda: any"
   lua_call(mLuaInst, 0, 1);
