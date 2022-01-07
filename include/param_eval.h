@@ -20,6 +20,7 @@ using std::vector;
 ////////////////
 
 #define KEY_NOT_FOUND 1
+#define KEY_EXIST 2
 #define FILE_NOT_FOUND 12
 #define UNSUPPORTED_TYPE 21
 
@@ -34,7 +35,6 @@ class ParamEval {
 
   // Common
   void loadParam(string const file);
-  void eval(string const expr);
   void set(string const name, string const expr);
   template <typename T>
   T get(string const name);
@@ -95,18 +95,19 @@ T ParamEval::get(string const name) {
   exit(UNSUPPORTED_TYPE);
 }
 
-void ParamEval::eval(string const expr) {
+void ParamEval::set(string const name, string const expr) {
+  if (std::find(mKnownVars.begin(), mKnownVars.end(), name) !=
+      mKnownVars.end()) {
+    cout << "Variable " << name << " has already been defined!" << endl;
+    exit(KEY_EXIST);
+  }
+  mKnownVars.emplace_back(name);
+
   lua_settop(mLuaInst, 0);                // to avoid stack overflow
   lua_getglobal(mLuaInst, "loadstring");  // the magic 'eval' in Lua
   lua_pushstring(mLuaInst, ("return " + expr).c_str());
   lua_call(mLuaInst, 1, 1);  // call "loadstring(expr) -> lambda: any"
   lua_call(mLuaInst, 0, 1);
-}
-
-void ParamEval::set(string const name, string const expr) {
-  if (std::find(mKnownVars.begin(), mKnownVars.end(), name) == mKnownVars.end())
-    mKnownVars.emplace_back(name);
-  eval(expr);
   lua_setglobal(mLuaInst, name.c_str());
 }
 
