@@ -18,6 +18,7 @@
             clang-tools
             lua
             libyamlcpp
+            cxxopts
           ];
         };
       });
