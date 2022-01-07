@@ -15,6 +15,7 @@
         devShell = pkgs.mkShell {
           name = "EmbededLuaEval";
           buildInputs = with pkgs; [
+            clang-tools
             lua
             libyamlcpp
           ];
