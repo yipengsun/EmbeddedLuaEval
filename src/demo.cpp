@@ -1,11 +1,11 @@
 // Author: Yipeng Sun
 // License: BSD 2-clause
-// Last Change: Fri Jan 07, 2022 at 06:30 PM +0100
-
-#include <iostream>
+// Last Change: Fri Jan 07, 2022 at 09:43 PM +0100
 
 #include <cxxopts.hpp>
-#include <lua.hpp>
+#include <iostream>
+
+#include "param_eval.h"
 
 using namespace std;
 
@@ -26,32 +26,14 @@ int main(int argc, char** argv) {
     return 0;
   }
 
-  auto luaState = luaL_newstate();
-  luaL_openlibs(luaState);
+  auto exe = make_unique<ParamEval>();
+  exe->set("a", "3.14*5");
 
-  lua_getglobal(luaState, "loadstring");
-  lua_pushstring(luaState, "return 123.4+7.9");
-  lua_call(luaState, 1, 1);
-  lua_call(luaState, 0, 1);
-  lua_setglobal(luaState, "a");
+  auto val = exe->get<double>("a");
+  cout << "val = " << val << endl;
 
-  auto a = lua_tonumber(luaState, 0);  // latest value on top of the stack
+  auto val2 = exe->get<bool>("a");
+  cout << "val2 = " << val2 << endl;
 
-  lua_settop(luaState, 0);  // avoid stack overflow
-  lua_getglobal(luaState, "loadstring");
-  lua_pushstring(luaState, "return a*2");
-  lua_call(luaState, 1, 1);
-  lua_call(luaState, 0, 1);
-  lua_setglobal(luaState, "b");
-
-  auto b = lua_tonumber(luaState, 0);
-
-  lua_settop(luaState, 0);  // avoid stack overflow
-  lua_getglobal(luaState, "a");
-  auto a2 = lua_tonumber(luaState, 1);
-
-  cout << a << " " << b << " " << a2 << endl;
-
-  lua_close(luaState);
   return 0;
 }
