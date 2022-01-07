@@ -47,6 +47,7 @@ class ParamEval {
   vector<YAML::Node> mLoadedYmls;
   vector<string>     mKnownVars;
 
+  void getCommon(string const name);
   bool fileExist(string const file);
 };
 
@@ -66,29 +67,25 @@ ParamEval::~ParamEval() { lua_close(mLuaInst); }
 
 template <>
 int ParamEval::get<int>(string const name) {
-  lua_settop(mLuaInst, 0);
-  lua_getglobal(mLuaInst, name.c_str());
+  getCommon(name);
   return lua_tointeger(mLuaInst, 1);
 }
 
 template <>
 double ParamEval::get<double>(string const name) {
-  lua_settop(mLuaInst, 0);
-  lua_getglobal(mLuaInst, name.c_str());
+  getCommon(name);
   return lua_tonumber(mLuaInst, 1);
 }
 
 template <>
 bool ParamEval::get<bool>(string const name) {
-  lua_settop(mLuaInst, 0);
-  lua_getglobal(mLuaInst, name.c_str());
+  getCommon(name);
   return lua_toboolean(mLuaInst, 1);
 }
 
 template <>
 string ParamEval::get<string>(string const name) {
-  lua_settop(mLuaInst, 0);
-  lua_getglobal(mLuaInst, name.c_str());
+  getCommon(name);
   return lua_tostring(mLuaInst, 1);
 }
 
@@ -107,11 +104,23 @@ void ParamEval::eval(string const expr) {
 }
 
 void ParamEval::set(string const name, string const expr) {
+  if (std::find(mKnownVars.begin(), mKnownVars.end(), name) == mKnownVars.end())
+    mKnownVars.emplace_back(name);
   eval(expr);
   lua_setglobal(mLuaInst, name.c_str());
 }
 
 // Private: helpers ////////////////////////////////////////////////////////////
+
+void ParamEval::getCommon(string const name) {
+  if (std::find(mKnownVars.begin(), mKnownVars.end(), name) ==
+      mKnownVars.end()) {
+    cout << "Unknown variable name: " << name << endl;
+    exit(KEY_NOT_FOUND);
+  }
+  lua_settop(mLuaInst, 0);
+  lua_getglobal(mLuaInst, name.c_str());
+}
 
 bool ParamEval::fileExist(string file) {
   if (FILE* _file = fopen(file.c_str(), "r")) {

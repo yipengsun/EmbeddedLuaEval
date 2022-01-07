@@ -1,6 +1,6 @@
 // Author: Yipeng Sun
 // License: BSD 2-clause
-// Last Change: Fri Jan 07, 2022 at 09:43 PM +0100
+// Last Change: Fri Jan 07, 2022 at 10:06 PM +0100
 
 #include <cxxopts.hpp>
 #include <iostream>
@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
   // clang-format off
   argOpts.add_options()
     ("h,help", "print usage")
-    ("e,eval", "evaluate expression", cxxopts::value<string>())
+    ("g,get", "get value of a known variable", cxxopts::value<string>())
     ("i,inputYml", "input YAML file", cxxopts::value<string>())
   ;
   // clang-format on
@@ -29,11 +29,8 @@ int main(int argc, char** argv) {
   auto exe = make_unique<ParamEval>();
   exe->set("a", "3.14*5");
 
-  auto val = exe->get<double>("a");
+  auto val = exe->get<double>(parsedArgs["get"].as<string>());
   cout << "val = " << val << endl;
-
-  auto val2 = exe->get<bool>("a");
-  cout << "val2 = " << val2 << endl;
 
   return 0;
 }

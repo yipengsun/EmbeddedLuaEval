@@ -1,5 +1,5 @@
 # Author: Yipeng Sun
-# Last Change: Fri Jan 07, 2022 at 09:19 PM +0100
+# Last Change: Fri Jan 07, 2022 at 10:07 PM +0100
 
 VPATH := include:src:bin
 HEADERS := $(shell find ./include -name "*.h")
@@ -17,7 +17,7 @@ clean:
 	@rm -rf ./bin/*
 
 run-demo: demo
-	bin/demo "1+1"
+	bin/demo -g "a"
 
 %: %.cpp flake.nix $(HEADERS)
 	$(COMPILER) $(CXXFLAGS) -o bin/$@ $< $(LINKFLAGS)
