@@ -1,5 +1,5 @@
 # Author: Yipeng Sun
-# Last Change: Fri Jan 07, 2022 at 11:46 PM +0100
+# Last Change: Fri Jan 07, 2022 at 11:52 PM +0100
 
 VPATH := include:src:bin
 HEADERS := $(shell find ./include -name "*.h")
@@ -12,7 +12,7 @@ LINKFLAGS	:=	-llua -lyaml-cpp
 .PHONY: clean run-demo
 
 run-demo: demo params/simple.yml
-	bin/demo -g area,r,name -t double,double,string -i ./params/simple.yml
+	bin/demo -g area,r,name,d,rightAngleInRad -t double,double,string,double,double -i ./params/simple.yml
 	bin/demo -g isCircle,wtf1,wtf2 -t bool,double,double -i ./params/simple.yml
 
 clean:

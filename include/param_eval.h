@@ -109,12 +109,12 @@ T ParamEval::get(string const name) {
 }
 
 void ParamEval::set(string const name, string const expr) {
-  if (std::find(mKnownVars.begin(), mKnownVars.end(), name) !=
+  if (std::find(mKnownVars.begin(), mKnownVars.end(), name) ==
       mKnownVars.end()) {
-    cout << "Variable " << name << " has already been defined!" << endl;
-    exit(KEY_EXIST);
+    // cout << "Variable " << name << " has already been defined!" << endl;
+    // exit(KEY_EXIST);
+    mKnownVars.emplace_back(name);
   }
-  mKnownVars.emplace_back(name);
 
   lua_settop(mLuaInst, 0);                // to avoid stack overflow
   lua_getglobal(mLuaInst, "loadstring");  // the magic 'eval' in Lua
