@@ -1,12 +1,12 @@
 # Author: Yipeng Sun
-# Last Change: Fri Jan 07, 2022 at 03:27 PM +0100
+# Last Change: Fri Jan 07, 2022 at 09:19 PM +0100
 
 VPATH := include:src:bin
 HEADERS := $(shell find ./include -name "*.h")
 
 # Compiler settings
 COMPILER	:=	${CXX}
-CXXFLAGS	:=	-O2 -march=native -mtune=native -Iinclude
+CXXFLAGS	:=	-pthread -std=c++17 -m64 -O2 -march=native -mtune=native -Iinclude
 LINKFLAGS	:=	-llua -lyaml-cpp
 
 .PHONY: all clean
