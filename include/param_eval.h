@@ -8,7 +8,6 @@
 #include <yaml-cpp/yaml.h>
 #include <lua.hpp>
 
-using std::cerr;
 using std::cout;
 using std::endl;
 
@@ -60,6 +59,20 @@ ParamEval::ParamEval() {
 ParamEval::~ParamEval() { lua_close(mLuaInst); }
 
 // Public: loaders  ////////////////////////////////////////////////////////////
+
+void ParamEval::loadParam(const string file) {
+  if (!fileExist(file)) {
+    cout << "YAML file " << file << " doesn't exist!" << endl;
+    exit(FILE_NOT_FOUND);
+  }
+
+  auto loadedYml = YAML::LoadFile(file);
+  mLoadedYmls.emplace_back(loadedYml);
+
+  for (auto it = loadedYml.begin(); it != loadedYml.end(); it++) {
+    set(it->first.as<string>(), it->second.as<string>());
+  }
+}
 
 // Public //////////////////////////////////////////////////////////////////////
 // FIXME: These are NOT thread-safe, as multiple 'eval's can definitely mess up

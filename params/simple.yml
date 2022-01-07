@@ -1,0 +1,13 @@
+pi: 3.14159
+r: 3
+area: pi*r^2
+circumference: 2*pi*r
+# string is supposed, but using it sounds like a bad idea...
+# don't forget to quote the name though. Also use ">-" to escape quotes
+name: >-
+    "A simple circle"
+isRectangle: false
+isTriangle: false
+# Lua DOESN'T support "!"
+# use 'not', 'and', 'or' here
+isCircle: not isRectangle and not isTriangle
