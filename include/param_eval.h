@@ -1,6 +1,6 @@
 // Author: Yipeng Sun
 // License: BSD 2-clause
-// Last Change: Sat Jan 08, 2022 at 12:11 AM +0100
+// Last Change: Sat Jan 08, 2022 at 02:59 AM +0100
 
 #ifndef _LUA_DEMO_PARAM_EVAL_
 #define _LUA_DEMO_PARAM_EVAL_
@@ -33,7 +33,8 @@ using std::vector;
 
 class ParamEval {
  public:
-  ParamEval();
+  ParamEval(bool sandbox);
+  ParamEval() : ParamEval(true){};
   ~ParamEval();
 
   // Common
@@ -50,16 +51,24 @@ class ParamEval {
   vector<YAML::Node> mLoadedYmls;
   vector<string>     mKnownVars;
 
+  // Lua modules to blacklist
+  vector<string> mBlackList = {"io",        "os",      "dofile", "loadfile",
+                               "coroutine", "package", "debug"};
+
   void getCommon(string const name);
   bool fileExist(string const file);
+  void blackListLuaModule(vector<string> modules);
 };
 
 // Constructor/destructor //////////////////////////////////////////////////////
 
-ParamEval::ParamEval() {
+ParamEval::ParamEval(bool sandbox) {
   mLuaInst = luaL_newstate();
   luaL_openlibs(mLuaInst);
+
+  if (sandbox) blackListLuaModule(mBlackList);
 }
+
 ParamEval::~ParamEval() { lua_close(mLuaInst); }
 
 // Public: loaders  ////////////////////////////////////////////////////////////
@@ -146,6 +155,13 @@ bool ParamEval::fileExist(string file) {
     return true;
   } else
     return false;
+}
+
+void ParamEval::blackListLuaModule(vector<string> modules) {
+  for (const auto& m : modules) {
+    lua_pushnil(mLuaInst);
+    lua_setglobal(mLuaInst, m.c_str());
+  }
 }
 
 #endif
