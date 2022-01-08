@@ -1,6 +1,6 @@
 // Author: Yipeng Sun
 // License: BSD 2-clause
-// Last Change: Sat Jan 08, 2022 at 03:03 AM +0100
+// Last Change: Sat Jan 08, 2022 at 03:19 PM +0100
 
 #include <cxxopts.hpp>
 #include <iostream>
@@ -54,12 +54,14 @@ int main(int argc, char** argv) {
     return 0;
   }
 
+  auto names = vector<string>{};
+  auto types = vector<string>{};
+  if (parsedArgs.count("get")) names = parsedArgs["get"].as<vector<string>>();
+  if (parsedArgs.count("type")) types = parsedArgs["type"].as<vector<string>>();
+
   auto isSandboxed = parsedArgs["sandbox"].as<bool>();
   auto exe         = make_unique<ParamEval>(isSandboxed);
   exe->loadParam(parsedArgs["inputYml"].as<string>());
-
-  const auto names = parsedArgs["get"].as<vector<string>>();
-  const auto types = parsedArgs["type"].as<vector<string>>();
   printParamVal(exe.get(), names, types);
 
   return 0;

@@ -1,6 +1,6 @@
 // Author: Yipeng Sun
 // License: BSD 2-clause
-// Last Change: Sat Jan 08, 2022 at 03:01 PM +0100
+// Last Change: Sat Jan 08, 2022 at 03:11 PM +0100
 
 #ifndef _LUA_DEMO_PARAM_EVAL_
 #define _LUA_DEMO_PARAM_EVAL_
@@ -59,7 +59,8 @@ class ParamEval {
   vector<string> mBlackList = {"io",        "os",      "dofile", "loadfile",
                                "coroutine", "package", "debug",  "require"};
   map<string, string> mAllowedInSandbox = {{"math", "math"},  // name, SB name
-                                           {"print", "print"}};
+                                           {"print", "print"},
+                                           {"pairs", "pairs"}};
   vector<string>      mProtectedVars    = {"_mSandboxEnv"};
 
   void getCommon(string const name);
