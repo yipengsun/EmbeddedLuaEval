@@ -1,0 +1,3 @@
+pi: math.pi
+warning: >-
+    os.execute('echo "Sandbox your Lua!! Next time I will be calling rm -rf!"')
