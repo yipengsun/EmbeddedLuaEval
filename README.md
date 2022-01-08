@@ -64,3 +64,12 @@ foo@bar$ bin/demo -g pi -t double -i ./params/lalaland.yml --sandbox=false
 Sandbox your Lua!! Next time I will be calling rm -rf!
 Parameter "pi" = 3.14159
 ```
+
+
+## Debugging variables
+
+You can tell the embedded Lua to print out certain variables directly in YAML:
+
+```yml
+debug: print(name, isRectangle)
+```

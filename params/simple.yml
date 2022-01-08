@@ -18,5 +18,4 @@ sin: math.cos
 wtf1: cos(0)   # it should return 0. everything's working as expected
 wtf2: sin(0)
 # you can even debug parameters by printing them out
-debug: >-
-    print(name)
+debug: print(name, isRectangle)
