@@ -1,6 +1,6 @@
 // Author: Yipeng Sun
 // License: BSD 2-clause
-// Last Change: Sat Jan 08, 2022 at 03:11 PM +0100
+// Last Change: Sat Jan 08, 2022 at 03:51 PM +0100
 
 #ifndef _LUA_DEMO_PARAM_EVAL_
 #define _LUA_DEMO_PARAM_EVAL_
@@ -61,7 +61,7 @@ class ParamEval {
   map<string, string> mAllowedInSandbox = {{"math", "math"},  // name, SB name
                                            {"print", "print"},
                                            {"pairs", "pairs"}};
-  vector<string>      mProtectedVars    = {"_mSandboxEnv"};
+  vector<string>      mProtectedVars    = {"_mSandboxEnv", "load"};
 
   void getCommon(string const name);
   void setNoSandbox(string const name, string const expr);
@@ -87,6 +87,9 @@ ParamEval::ParamEval(bool sandbox) : mSandbox(sandbox) {
     blackListLuaModule();  // Baseline blacklist to ensure no un-restricted Lua
                            // interpreter is exposed
     makeSandboxEnv();
+
+    // Also protect function names defined in the sandbox
+    for (auto kv : mAllowedInSandbox) mProtectedVars.emplace_back(kv.second);
   }
 }
 

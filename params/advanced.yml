@@ -10,5 +10,12 @@ tab: >-
 printTab: >-
     (function () for k, v in pairs(tab) do print(k .. " = " .. v) end end)()
 # ipairs is not allowed
-# printTabBad: >-
-#     (function () for i, v in ipairs(tab) do print("idx " .. i ": " .. v) end end)()
+#printTabBad: >-
+#    (function () for i, v in ipairs(tab) do print("idx " .. i ": " .. v) end end)()
+
+# no protected variable can be altered
+#_mSandboxEnv: false
+#load: false
+#math: false
+#print: false
+#pairs: false
