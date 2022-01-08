@@ -1,4 +1,7 @@
 # EmbededLuaEval [![github CI](https://github.com/yipengsun/EmbededLuaEval/workflows/CI/badge.svg?branch=master)](https://github.com/yipengsun/EmbededLuaEval/actions?query=workflow%3ACI)
+
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+
 A simple demo to embed Lua in a C++ program.
 
 **WARNING**: The Lua expressions are **NOT** checked against arbitrary code
