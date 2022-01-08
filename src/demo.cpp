@@ -1,6 +1,6 @@
 // Author: Yipeng Sun
 // License: BSD 2-clause
-// Last Change: Fri Jan 07, 2022 at 11:47 PM +0100
+// Last Change: Sat Jan 08, 2022 at 03:03 AM +0100
 
 #include <cxxopts.hpp>
 #include <iostream>
@@ -42,6 +42,9 @@ int main(int argc, char** argv) {
     ("g,get", "get value of variables", cxxopts::value<vector<string>>())
     ("t,type", "variable types", cxxopts::value<vector<string>>())
     ("i,inputYml", "input YAML file", cxxopts::value<string>())
+    // One flag to RULE THEM ALL
+    ("sandbox", "sandbox lua interpreter, to an extent", cxxopts::value<bool>()
+     ->default_value("true"))
   ;
   // clang-format on
 
@@ -51,7 +54,8 @@ int main(int argc, char** argv) {
     return 0;
   }
 
-  auto exe = make_unique<ParamEval>();
+  auto isSandboxed = parsedArgs["sandbox"].as<bool>();
+  auto exe         = make_unique<ParamEval>(isSandboxed);
   exe->loadParam(parsedArgs["inputYml"].as<string>());
 
   const auto names = parsedArgs["get"].as<vector<string>>();
