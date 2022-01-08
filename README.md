@@ -1,4 +1,4 @@
-# EmbededLuaEval [![github CI](https://github.com/yipengsun/EmbededLuaEval/workflows/CI/badge.svg?branch=master)](https://github.com/yipengsun/EmbededLuaEval/actions?query=workflow%3ACI)
+# EmbeddedLuaEval [![github CI](https://github.com/yipengsun/EmbededLuaEval/workflows/CI/badge.svg?branch=master)](https://github.com/yipengsun/EmbededLuaEval/actions?query=workflow%3ACI)
 
 [![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
 

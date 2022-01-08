@@ -13,7 +13,7 @@
       in
       {
         devShell = pkgs.mkShell {
-          name = "EmbededLuaEval";
+          name = "EmbeddedLuaEval";
           buildInputs = with pkgs; [
             clang-tools
             luaformatter
