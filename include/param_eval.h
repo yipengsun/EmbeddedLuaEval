@@ -1,3 +1,7 @@
+// Author: Yipeng Sun
+// License: BSD 2-clause
+// Last Change: Sat Jan 08, 2022 at 12:11 AM +0100
+
 #ifndef _LUA_DEMO_PARAM_EVAL_
 #define _LUA_DEMO_PARAM_EVAL_
 

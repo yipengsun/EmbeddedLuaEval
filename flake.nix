@@ -16,6 +16,7 @@
           name = "EmbededLuaEval";
           buildInputs = with pkgs; [
             clang-tools
+            luaformatter
             lua
             libyamlcpp
             cxxopts
