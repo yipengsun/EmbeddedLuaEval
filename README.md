@@ -4,10 +4,6 @@
 
 A simple demo to embed Lua in a C++ program.
 
-**WARNING**: The Lua expressions are **NOT** checked against arbitrary code
-injection! **Sanitize the input YAML files** to ensure no malicious code before
-loading them in!
-
 
 ## Motivation
 
@@ -40,3 +36,31 @@ defined just like above, without explicit computation on user's side.
 2. Run `nix develop`
 3. In the resulting shell, run `make`
 4. Profit!
+
+
+## On security
+
+By default the embedded Lua interpreter is running in a sandboxed mode, where
+most of the Lua standard libraries are unloaded so that IO and system calls are
+forbidden.
+
+Suppose the following malicious YAML file:
+
+```yml
+pi: math.pi
+warning: >-
+    os.execute('echo "Sandbox your Lua!! Next time I will be calling rm -rf!"')
+```
+
+Run with the sandboxed Lua:
+```shell
+> bin/demo -g pi -t double -i ./params/lalaland.yml
+PANIC: unprotected error in call to Lua API ([string "return os.execute('echo "Sandbox your Lua!! N..."]:1: attempt to index global 'os' (a nil value))
+```
+
+If you feel particularly brave:
+```shell
+> bin/demo -g pi -t double -i ./params/lalaland.yml --sandbox=false
+Sandbox your Lua!! Next time I will be calling rm -rf!
+Parameter "pi" = 3.14159
+```
