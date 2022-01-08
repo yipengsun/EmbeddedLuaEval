@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 
 -- Configurables
-MATH_OP = {'+', '-'}  -- '*, /' makes the variables go to inf or nan
+MATH_OP = {'+', '-'} -- '*, /' makes the variables go to inf or nan
 MAX_PARAMS = 5
 KNOWN_NAMES = {'val0'}
 KNOWN_EXPR = {'3.14159'}
@@ -38,12 +38,10 @@ for i = 1, maxSize do
 
     local varsInExpr = getRand(KNOWN_NAMES, MAX_PARAMS)
     local len = tableLen(varsInExpr)
-    local ops = getRand(MATH_OP, math.min(len, MAX_PARAMS-1))
+    local ops = getRand(MATH_OP, math.min(len, MAX_PARAMS - 1))
 
     local expr = ''
-    for j = 1, tableLen(ops) do
-        expr = expr .. varsInExpr[j] .. ops[j]
-    end
+    for j = 1, tableLen(ops) do expr = expr .. varsInExpr[j] .. ops[j] end
     expr = expr .. varsInExpr[len]
 
     KNOWN_NAMES[#KNOWN_NAMES + 1] = 'val' .. tostring(i)
