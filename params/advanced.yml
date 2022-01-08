@@ -1,4 +1,4 @@
-msgGood: >-
+msg: >-
     print("This should work")
 a: 1
 b: 2
@@ -9,4 +9,6 @@ tab: >-
 # pairs is allowed, so this works
 printTab: >-
     (function () for k, v in pairs(tab) do print(k .. " = " .. v) end end)()
-# printTabBad: for _, i in ipairs(tab) do print(i) end  # ipairs not allowed
+# ipairs is not allowed
+# printTabBad: >-
+#     (function () for i, v in ipairs(tab) do print("idx " .. i ": " .. v) end end)()
