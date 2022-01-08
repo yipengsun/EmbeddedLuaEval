@@ -17,7 +17,7 @@ function getRand(t, numOfElem)
     local result = {}
     local len = tableLen(t)
 
-    for i = 1, math.min(tableLen(t), numOfElem) do
+    for i = 1, numOfElem do
         local x = math.random(1, len)
         result[#result + 1] = t[x]
     end
