@@ -54,13 +54,13 @@ warning: >-
 
 Run with the sandboxed Lua:
 ```console
-~$ bin/demo -g pi -t double -i ./params/lalaland.yml
+foo@bar$ bin/demo -g pi -t double -i ./params/lalaland.yml
 PANIC: unprotected error in call to Lua API ([string "return os.execute('echo "Sandbox your Lua!! N..."]:1: attempt to index global 'os' (a nil value))
 ```
 
 If you feel particularly brave:
 ```console
-~$ bin/demo -g pi -t double -i ./params/lalaland.yml --sandbox=false
+foo@bar$ bin/demo -g pi -t double -i ./params/lalaland.yml --sandbox=false
 Sandbox your Lua!! Next time I will be calling rm -rf!
 Parameter "pi" = 3.14159
 ```
