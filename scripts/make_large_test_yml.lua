@@ -1,13 +1,13 @@
 #!/usr/bin/env lua
 
 -- Configurables
-MATH_OP = {'+', '-'} -- '*, /' makes the variables go to inf or nan
-MAX_PARAMS = 5
-KNOWN_NAMES = {'val0'}
-KNOWN_EXPR = {'3.14159'}
+mathOp = {'+', '-'} -- '*, /' make the variables go to inf or nan
+maxParams = 6
+knownNames = {'val0'}
+knownExprs = {'3.14159'}
 
 -- Helpers
-function tableLen(t)
+function tabLen(t)
     local count = 0
     for _ in pairs(t) do count = count + 1 end
     return count
@@ -15,7 +15,7 @@ end
 
 function getRand(t, numOfElem)
     local result = {}
-    local len = tableLen(t)
+    local len = tabLen(t)
 
     for i = 1, numOfElem do
         local x = math.random(1, len)
@@ -35,25 +35,25 @@ print(string.format('Generating a test YAML file with %d variables...',
                     maxSize + 1))
 for i = 1, maxSize do
     local varName = 'val' .. tostring(i)
+    local min = math.min
 
-    local varsInExpr = getRand(KNOWN_NAMES, MAX_PARAMS)
-    local len = tableLen(varsInExpr)
-    local ops = getRand(MATH_OP, math.min(len, MAX_PARAMS - 1))
+    local varsInExpr = getRand(knownNames, min(tabLen(knownNames), maxParams))
+    local len = tabLen(varsInExpr)
+    local ops = getRand(mathOp, len - 1)
 
     local expr = ''
-    for j = 1, tableLen(ops) do expr = expr .. varsInExpr[j] .. ops[j] end
+    for j = 1, tabLen(ops) do expr = expr .. varsInExpr[j] .. ops[j] end
     expr = expr .. varsInExpr[len]
 
-    KNOWN_NAMES[#KNOWN_NAMES + 1] = 'val' .. tostring(i)
-    KNOWN_EXPR[#KNOWN_EXPR + 1] = expr
+    knownNames[#knownNames + 1] = 'val' .. tostring(i)
+    knownExprs[#knownExprs + 1] = expr
 end
 
 local file = io.open(filename, 'w')
 io.output(file)
 
-for i = 1, tableLen(KNOWN_NAMES) do
-    local line = KNOWN_NAMES[i] .. ': ' .. KNOWN_EXPR[i] .. '\n'
-    io.write(line)
+for i = 1, tabLen(knownNames) do
+    io.write(knownNames[i] .. ': ' .. knownExprs[i] .. '\n')
 end
 
 io.close(file)
