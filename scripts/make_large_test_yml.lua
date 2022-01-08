@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 
 -- Configurables
-MATH_OP = {'+', '-', '*', '/'}
+MATH_OP = {'+', '-'}  -- '*, /' makes the variables go to inf or nan
 MAX_PARAMS = 5
 KNOWN_NAMES = {'val0'}
 KNOWN_EXPR = {'3.14159'}
