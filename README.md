@@ -44,7 +44,14 @@ By default the embedded Lua interpreter is running in a sandboxed mode, where
 most of the Lua standard libraries are unloaded so that IO and system calls are
 forbidden.
 
-Suppose the following malicious YAML file:
+The variable definition environment is further restricted s.t. only the
+following modules/functions are allowed:
+
+- `math`
+- `print`
+- `pairs`
+
+Consider the following malicious YAML file ([`lalaland.yml`](./params/lalaland.yml)):
 
 ```yml
 pi: math.pi
@@ -55,7 +62,7 @@ warning: >-
 Run with the sandboxed Lua:
 ```console
 foo@bar$ bin/demo -g pi -t double -i ./params/lalaland.yml
-PANIC: unprotected error in call to Lua API ([string "return os.execute('echo "Sandbox your Lua!! N..."]:1: attempt to index global 'os' (a nil value))
+PANIC: unprotected error in call to Lua API ([string ""]:1: attempt to index global 'os' (a nil value))
 ```
 
 If you feel particularly brave:
@@ -73,3 +80,5 @@ You can tell the embedded Lua to print out certain variables directly in YAML:
 ```yml
 debug: print(name, isRectangle)
 ```
+
+For more advanced usage, see [`advanced.yml`](./params/advanced.yml).

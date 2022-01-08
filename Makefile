@@ -1,5 +1,5 @@
 # Author: Yipeng Sun
-# Last Change: Sat Jan 08, 2022 at 03:01 AM +0100
+# Last Change: Sat Jan 08, 2022 at 03:18 PM +0100
 
 VPATH := include:src:bin
 HEADERS := $(shell find ./include -name "*.h")
@@ -17,6 +17,7 @@ run-demo: demo params/simple.yml
 	bin/demo -g val1,val100,val314,val9999 -t double,double,double,double -i ./params/long.yml
 	bin/demo -g pi -t double -i ./params/lalaland.yml || true
 	bin/demo -g pi -t double -i ./params/lalaland.yml --sandbox=false
+	bin/demo -i ./params/advanced.yml
 
 long-yml-gen:
 	scripts/make_large_test_yml.lua 9999 ./params/long.yml

@@ -1,0 +1,12 @@
+msgGood: >-
+    print("This should work")
+a: 1
+b: 2
+c: 3
+debug: print(a, b, c)
+tab: >-
+    {a = a, b = b, c = c}
+# pairs is allowed, so this works
+printTab: >-
+    (function () for k, v in pairs(tab) do print(k .. " = " .. v) end end)()
+# printTabBad: for _, i in ipairs(tab) do print(i) end  # ipairs not allowed
