@@ -13,6 +13,17 @@ printTab: >-
 #printTabBad: >-
 #    (function () for i, v in ipairs(tab) do print("idx " .. i ": " .. v) end end)()
 
+# you can also define Lua functions (same function as above)
+# it's particularly nice that all functions in Lua are anonymous lambda
+prettyPrint: >-
+    function(t)
+        print("You are now using prettyPrint...")
+        for k, v in pairs(t) do
+            print(k .. " = " .. v)
+        end
+    end
+printTabAgain: prettyPrint(tab)
+
 # no protected variable can be altered
 #_mSandboxEnv: false
 #load: false
