@@ -37,3 +37,4 @@ printDictAgain: prettyPrint(dict)
 #math: false
 #print: false
 #pairs: false
+#ipairs: false
