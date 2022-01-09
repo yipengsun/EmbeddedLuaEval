@@ -1,17 +1,24 @@
 msg: >-
     print("This should work")
-a: 1
-b: 2
-c: 3
+
+a: math.pi
+b: math.cos(a)
+c: math.sin(a)
+
 debug: print(a, b, c)
-tab: >-
+
+# these names are chosen because they are similar to Python counter parts
+# Lua's array can act like both, which can be good or annoying
+list: >-
+    {a, b, c}
+dict: >-
     {a = a, b = b, c = c}
-# pairs is allowed, so this works
-printTab: >-
-    (function () for k, v in pairs(tab) do print(k .. " = " .. v) end end)()
-# ipairs is not allowed
-#printTabBad: >-
-#    (function () for i, v in ipairs(tab) do print("idx " .. i ": " .. v) end end)()
+
+# pairs and ipairs are allowed, so these work
+printList: >-
+    (function(x) for i, v in ipairs(x) do print("idx "..i..": "..v) end end)(list)
+printDict: >-
+    (function(x) for k, v in pairs(x) do print(k .. " = " .. v) end end)(dict)
 
 # you can also define Lua functions (same function as above)
 # it's particularly nice that all functions in Lua are anonymous lambda
@@ -22,7 +29,7 @@ prettyPrint: >-
             print(k .. " = " .. v)
         end
     end
-printTabAgain: prettyPrint(tab)
+printDictAgain: prettyPrint(dict)
 
 # no protected variable can be altered
 #_mSandboxEnv: false

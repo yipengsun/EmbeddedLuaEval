@@ -1,6 +1,6 @@
 // Author: Yipeng Sun
 // License: BSD 2-clause
-// Last Change: Sat Jan 08, 2022 at 03:51 PM +0100
+// Last Change: Sun Jan 09, 2022 at 02:55 AM +0100
 
 #ifndef _LUA_DEMO_PARAM_EVAL_
 #define _LUA_DEMO_PARAM_EVAL_
@@ -55,13 +55,20 @@ class ParamEval {
   vector<YAML::Node> mLoadedYmls;
   vector<string>     mKnownVars;
 
+  // clang-format off
   // Lua modules to blacklist
-  vector<string> mBlackList = {"io",        "os",      "dofile", "loadfile",
-                               "coroutine", "package", "debug",  "require"};
-  map<string, string> mAllowedInSandbox = {{"math", "math"},  // name, SB name
-                                           {"print", "print"},
-                                           {"pairs", "pairs"}};
-  vector<string>      mProtectedVars    = {"_mSandboxEnv", "load"};
+  vector<string> mBlackList = {
+    "io", "os", "dofile", "loadfile",
+    "coroutine", "package", "debug",  "require"
+  };
+  vector<string> mProtectedVars = {"_mSandboxEnv", "load"};
+
+  // Lua moduels/functions allowed in SB, (name, name in SB)
+  map<string, string> mAllowedInSandbox = {
+    {"math", "math"}, {"print", "print"},
+    {"pairs", "pairs"}, {"ipairs", "ipairs"}
+  };
+  // clang-format on
 
   void getCommon(string const name);
   void setNoSandbox(string const name, string const expr);
@@ -89,6 +96,7 @@ ParamEval::ParamEval(bool sandbox) : mSandbox(sandbox) {
     makeSandboxEnv();
 
     // Also protect function names defined in the sandbox
+    for (auto kv : mAllowedInSandbox) mProtectedVars.emplace_back(kv.first);
     for (auto kv : mAllowedInSandbox) mProtectedVars.emplace_back(kv.second);
   }
 }

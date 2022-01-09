@@ -50,6 +50,7 @@ following modules/functions are allowed:
 - `math`
 - `print`
 - `pairs`
+- `ipairs`
 
 Consider the following malicious YAML file ([`lalaland.yml`](./params/lalaland.yml)):
 
