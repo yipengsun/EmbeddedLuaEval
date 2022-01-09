@@ -17,11 +17,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1641463613,
-        "narHash": "sha256-xZN9igqdZvnhSeTx8OlGby/OaYQHwgXVrBrPW0gLEh8=",
+        "lastModified": 1641671388,
+        "narHash": "sha256-aHoO6CpPLJK8hLkPJrpMnCRnj3YbfQZ7HNcXcnI83E0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "77fda7f672726e1a95c8cd200f27bccfc86c870b",
+        "rev": "32356ce11b8cc5cc421b68138ae8c730cc8ad4a2",
         "type": "github"
       },
       "original": {
@@ -30,10 +30,36 @@
         "type": "indirect"
       }
     },
-    "root": {
+    "nixpkgs-pointer": {
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1641696799,
+        "narHash": "sha256-ay7HT1mCbv5bs916H/U97jpo/83bPgIPbOeNBmWqDcs=",
+        "owner": "yipengsun",
+        "repo": "nixpkgs-pointer",
+        "rev": "626e8ce18847eef3cfaa628e7b98c0bd7e2b0cd4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yipengsun",
+        "repo": "nixpkgs-pointer",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-utils": [
+          "nixpkgs-pointer",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs-pointer",
+          "nixpkgs"
+        ],
+        "nixpkgs-pointer": "nixpkgs-pointer"
       }
     }
   },
