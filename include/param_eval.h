@@ -1,6 +1,6 @@
 // Author: Yipeng Sun
 // License: BSD 2-clause
-// Last Change: Sun Jan 09, 2022 at 02:55 AM +0100
+// Last Change: Tue Jan 18, 2022 at 03:10 AM +0100
 
 #ifndef _LUA_DEMO_PARAM_EVAL_
 #define _LUA_DEMO_PARAM_EVAL_
@@ -181,7 +181,7 @@ void ParamEval::setNoSandbox(string const name, string const expr) {
   lua_settop(mLuaInst, 0);          // to avoid stack overflow
   lua_getglobal(mLuaInst, "load");  // the magic 'eval' in Lua
   lua_pushstring(mLuaInst, ("return " + expr).c_str());
-  lua_call(mLuaInst, 1, 1);  // call "loadstring(expr) -> lambda: any"
+  lua_call(mLuaInst, 1, 1);  // call "load(expr) -> lambda: any"
   lua_call(mLuaInst, 0, 1);
   lua_setglobal(mLuaInst, name.c_str());
 }
@@ -205,7 +205,8 @@ void ParamEval::setSandbox(string const name, string const expr) {
   lua_pushstring(mLuaInst, "");
   lua_pushstring(mLuaInst, "t");
   lua_getglobal(mLuaInst, "_mSandboxEnv");
-  lua_call(mLuaInst, 4, 1);  // call "loadstring(expr) -> lambda: any"
+  lua_call(mLuaInst, 4,
+           1);  // call "load(expr, "", "t", allowed_vars) -> lambda: any"
   lua_call(mLuaInst, 0, 1);
   lua_setglobal(mLuaInst, name.c_str());
 
