@@ -1,6 +1,6 @@
 // Author: Yipeng Sun
 // License: BSD 2-clause
-// Last Change: Tue Jan 18, 2022 at 03:10 AM +0100
+// Last Change: Wed Aug 24, 2022 at 01:19 AM -0400
 
 #ifndef _LUA_DEMO_PARAM_EVAL_
 #define _LUA_DEMO_PARAM_EVAL_
@@ -43,6 +43,7 @@ class ParamEval {
   // Common
   void loadParam(string const file);
   void set(string const name, string const expr);
+  bool has(string const name);
   template <typename T>
   T get(string const name);
 
@@ -123,6 +124,12 @@ void ParamEval::loadParam(const string file) {
 // FIXME: These are NOT thread-safe, as multiple 'eval's can definitely mess up
 //        with the stack! But we don't care about that for now.
 
+bool ParamEval::has(string const name) {
+  if (std::find(mKnownVars.begin(), mKnownVars.end(), name) == mKnownVars.end())
+    return false;
+  return true;
+}
+
 template <>
 int ParamEval::get<int>(string const name) {
   getCommon(name);
@@ -163,8 +170,7 @@ void ParamEval::set(string const name, string const expr) {
 // Private  ////////////////////////////////////////////////////////////////////
 
 void ParamEval::getCommon(string const name) {
-  if (std::find(mKnownVars.begin(), mKnownVars.end(), name) ==
-      mKnownVars.end()) {
+  if (!has(name)) {
     cout << "Unknown variable name: " << name << endl;
     exit(KEY_NOT_FOUND);
   }
